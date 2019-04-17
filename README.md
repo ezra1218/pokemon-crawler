@@ -51,6 +51,9 @@ $ open .bash_profile
 将 export MONGO_PATH=/usr/local/mongodb 和 export PATH=$PATH:$MONGO_PATH/bin 粘贴至 .bash_profile 中保存
 
 ## 运行
-在 /pokemon 目录下 运行 scrapy crawl pokemons 即可开始爬取 Pokemon 的各项数据  
-并保存至 MongoDB
+在 /pokemon 目录下 运行 
+```
+$ scrapy crawl pokemons
+```
+即可开始爬取 Pokemon 的各项数据，并保存至 MongoDB
 ![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/pokemons-scrapy/IMG/pokemons-stats-mongodb-screenshot.png)
