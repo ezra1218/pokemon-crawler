@@ -20,6 +20,8 @@ class PokemonsItem(scrapy.Item):
     ability_1 = scrapy.Field() # 特性1
     ability_2 = scrapy.Field() # 特性2
     exp_100 = scrapy.Field() # 100级时经验值
+    height_m = scrapy.Field() # 身高
+    weight_kg = scrapy.Field() # 体重
     catch_rate = scrapy.Field() # 普通精灵球在 Pokemon 满血状态下抓到的概率
     male_ratio = scrapy.Field() # male比例
     hatch_time = scrapy.Field() # 孵化步数
@@ -30,6 +32,7 @@ class PokemonsItem(scrapy.Item):
     spdef = scrapy.Field() # 特殊防御力
     speed = scrapy.Field() # 速度
     total = scrapy.Field() # 种族值总和
+    generation = scrapy.Field() # 世代
     image_url = scrapy.Field() # 图片链接
 
     # =======================================

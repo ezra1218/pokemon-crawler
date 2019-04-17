@@ -107,6 +107,18 @@ class pokemonsSpider(scrapy.Spider):
                 raise Exception('Pokemon Experience not found for {}'\
                     .format(response.url))
 
+            # 获取 Pokemon 身高
+            height_m = self.extract_height(base_info_trs)
+            if height_m is None:
+                raise Exception('Pokemon Height not found for {}'\
+                    .format(response.url))
+
+            # 获取 Pokemon 100级时的经验值
+            weight_kg = self.extract_weight(base_info_trs)
+            if weight_kg is None:
+                raise Exception('Pokemon Weight not found for {}'\
+                    .format(response.url))
+
             # 获取 普通的精灵球在 Pokemon 满体力下的捕获率
             catch_rate = self.extract_catch_rate(base_info_trs)
             if catch_rate is None:
@@ -165,6 +177,12 @@ class pokemonsSpider(scrapy.Spider):
             total = self.extract_total(stats_info_trs)
             if total is None:
                 raise Exception('Pokemon Total not found for {}'\
+                    .format(response.url))
+
+            # 获取 Pokemon 世代
+            generation = self.extract_generation(soup)
+            if generation is None:
+                raise Exception('Pokemon Generation not found for {}'\
                     .format(response.url))
 
             # 获取 Pokemon 图片链接
@@ -287,12 +305,15 @@ class pokemonsSpider(scrapy.Spider):
                                         type_1=type_1, type_2=type_2,  
                                         category=category, 
                                         ability_1=ability_1, ability_2=ability_2, 
-                                        exp_100=exp_100, catch_rate=catch_rate,
+                                        exp_100=exp_100, height_m=height_m, 
+                                        weight_kg=weight_kg, 
+                                        catch_rate=catch_rate,
                                         male_ratio=male_ratio, 
                                         hatch_time=hatch_time, hp=hp, atk=atk, 
                                         defense=defense,  spatk=spatk, 
                                         spdef=spdef, speed=speed, 
-                                        total=total, image_url=image_url, 
+                                        total=total, generation=generation, 
+                                        image_url=image_url, 
                                         against_normal=against_normal,
                                         against_fight=against_fight, 
                                         against_flying=against_flying,
@@ -397,6 +418,8 @@ class pokemonsSpider(scrapy.Spider):
         '''
         if len(trs) == 60:
             return re.findall(r'\d.\d', trs[31].text.strip())[0]
+        if len(trs) == 62: # 基格尔德
+            return 0
         return re.findall(r'\d.\d', trs[32].text.strip())[0]
 
     @staticmethod
@@ -405,7 +428,9 @@ class pokemonsSpider(scrapy.Spider):
         提取 Pokemon 体重（kg）
         '''
         if len(trs) == 60:
-            return re.findall(r'\d.\d', trs[33].text.strip())[0]   
+            return re.findall(r'\d.\d', trs[33].text.strip())[0]
+        if len(trs) == 62: # 基格尔德
+            return 0   
         return re.findall(r'\d.\d', trs[34].text.strip())[0]
 
     @staticmethod
@@ -492,6 +517,14 @@ class pokemonsSpider(scrapy.Spider):
         提取 Pokemon 种族值总值
         '''
         return re.findall(r'\d{3}', trs[15].text)[0].strip()
+
+    @staticmethod
+    def extract_generation(soup):
+        '''
+        提取 Pokemon 世代
+        '''
+        catlinks = soup.find(class_='mw-normal-catlinks')
+        return re.search(r'第[\u4e00-\u9fa5]世代寶可夢', catlinks.text)[0]
 
     @staticmethod
     def extract_image_url(trs):
