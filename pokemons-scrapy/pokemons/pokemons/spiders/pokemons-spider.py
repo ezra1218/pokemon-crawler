@@ -362,6 +362,8 @@ class pokemonsSpider(scrapy.Spider):
         '''
         提取 Pokemon 类别
         '''
+        if len(trs) == 62: # 基格尔德
+            return trs[9].text.strip()
         return trs[8].text.strip()
 
     @staticmethod
@@ -384,6 +386,8 @@ class pokemonsSpider(scrapy.Spider):
         '''
         if len(trs) == 60:
             return trs[13].text.strip()
+        elif len(trs) == 62: # 基格尔德
+            return trs[15].text.strip()
         return trs[14].text.strip()
 
     @staticmethod
@@ -418,12 +422,18 @@ class pokemonsSpider(scrapy.Spider):
         '''
         提取 Pokemon 是 male 的比例
         '''
-        if len(trs) == 60 and trs[48].find('span'):
-            return re.findall(r'[\d.\d]*%', trs[48].find('span').text)[0]
-        elif len(trs) == 61 and trs[49].find('span'):
-            return re.findall(r'[\d.\d]*%', trs[49].find('span').text)[0]
-        else:
-            return trs[48].text.strip()
+        if len(trs) == 60:
+            if trs[48].find('span'):
+                return re.findall(r'[\d.\d]*%', trs[48].find('span').text)[0]
+            else:
+                return trs[48].text.strip()
+        elif len(trs) == 61:
+            if trs[49].find('span'):
+                return re.findall(r'[\d.\d]*%', trs[49].find('span').text)[0]
+            else:
+                return trs[49].text.strip()
+        else: # 基格尔德
+            return trs[50].text.strip()
 
     @staticmethod
     def extract_hatch_time(trs):
