@@ -84,9 +84,9 @@ class pokemonsSpider(scrapy.Spider):
                     .format(response.url))
 
             # 获取 Pokemon 属性
-            types = self.extract_types(base_info_trs)
-            if types is None:
-                raise Exception('Pokemon types not found for {}'\
+            type_1, type_2 = self.extract_types(base_info_trs)
+            if type_1 is None:
+                raise Exception('Pokemon Type 1 not found for {}'\
                     .format(response.url))
 
             # 获取 Pokemon 分类
@@ -96,9 +96,9 @@ class pokemonsSpider(scrapy.Spider):
                     .format(response.url))
 
             # 获取 Pokemon 特性
-            abilities = self.extract_abilities(base_info_trs)
-            if abilities is None:
-                raise Exception('Pokemon abilities not found for {}'\
+            ability_1, ability_2 = self.extract_abilities(base_info_trs)
+            if ability_1 is None:
+                raise Exception('Pokemon Ability 1 not found for {}'\
                     .format(response.url))
 
             # 获取 Pokemon 100级时的经验值
@@ -283,8 +283,10 @@ class pokemonsSpider(scrapy.Spider):
 
             # 保存成 item 以存储至 mongodb
             pokemon_item = PokemonsItem(_id=pokdex, chinese_name=chinese_name, 
-                                        english_name=english_name, types=types, 
-                                        category=category, abilities=abilities,
+                                        english_name=english_name, 
+                                        type_1=type_1, type_2=type_2,  
+                                        category=category, 
+                                        ability_1=ability_1, ability_2=ability_2, 
                                         exp_100=exp_100, catch_rate=catch_rate,
                                         male_ratio=male_ratio, 
                                         hatch_time=hatch_time, hp=hp, atk=atk, 
@@ -347,7 +349,13 @@ class pokemonsSpider(scrapy.Spider):
         '''
         提取 Pokemon 属性
         '''
-        return trs[6].text.strip().split('\xa0\xa0')
+        types = types = trs[6].text.strip().split('\xa0\xa0')
+        if len(types) == 2: # 如果该 Pokemon 有两种属性
+            # 返回两种属性
+            return types[0], types[1]
+        else:
+            # 返回一种属性
+            return types[0], None
 
     @staticmethod
     def extract_category(trs):
@@ -361,7 +369,13 @@ class pokemonsSpider(scrapy.Spider):
         '''
         提取 Pokemon 特性
         '''
-        return trs[11].text.strip().replace('\xa0', ' ').split('\n\n')
+        abilities = trs[11].text.strip().replace('\xa0', ' ').split('\n\n')
+        if len(abilities) == 2: # 如果该 Pokemon 有两种特性
+            # 返回两种特性
+            return abilities[0], abilities[1]
+        else:
+            # 返回一种特性
+            return abilities[0], None
     
     @staticmethod
     def extract_exp_100(trs):

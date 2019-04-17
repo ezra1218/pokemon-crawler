@@ -14,9 +14,11 @@ class PokemonsItem(scrapy.Item):
     _id = scrapy.Field()# Pokemon 全国编号
     chinese_name = scrapy.Field() # 中文名字
     english_name = scrapy.Field() # 英文名字
-    types = scrapy.Field() # 属性
+    type_1 = scrapy.Field() # 属性1
+    type_2 = scrapy.Field() # 属性2
     category = scrapy.Field() # 类别
-    abilities = scrapy.Field() # 特性
+    ability_1 = scrapy.Field() # 特性1
+    ability_2 = scrapy.Field() # 特性2
     exp_100 = scrapy.Field() # 100级时经验值
     catch_rate = scrapy.Field() # 普通精灵球在 Pokemon 满血状态下抓到的概率
     male_ratio = scrapy.Field() # male比例
