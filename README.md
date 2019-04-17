@@ -3,7 +3,7 @@
 
 ## 安装 packages
 **scrapy**  
-[scrapy](https://docs.scrapy.org/en/latest/intro/install.html) 是一个Python编写的开源网络爬虫框架，优势在于使用异步处理请求和通过 pipelines 将数据保存至数据库
+[scrapy](https://docs.scrapy.org/en/latest/intro/install.html) 是一个 python 编写的开源网络爬虫框架，优势在于使用异步处理请求和通过 pipelines 将数据保存至数据库
 ```
 $ conda install -c conda-forge scrapy
 ```
@@ -15,7 +15,7 @@ $ pip install pymongo
 ```
 
 **BeautifulSoup**   
-[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) 是一个可以从HTML或XML文件中提取数据的Python库
+[BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) 是一个可以从 HTML 或 XML 文件中提取数据的 python 库
 ```
 $ pip install beautifulsoup4
 ```
