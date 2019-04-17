@@ -12,7 +12,8 @@ class PokemonsItem(scrapy.Item):
     # =======================================
     # 基础信息
     _id = scrapy.Field()# Pokemon 全国编号
-    name = scrapy.Field() # 名字
+    chinese_name = scrapy.Field() # 中文名字
+    english_name = scrapy.Field() # 英文名字
     types = scrapy.Field() # 属性
     category = scrapy.Field() # 类别
     abilities = scrapy.Field() # 特性

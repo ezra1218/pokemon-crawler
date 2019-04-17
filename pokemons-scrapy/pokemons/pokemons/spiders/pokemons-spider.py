@@ -65,10 +65,16 @@ class pokemonsSpider(scrapy.Spider):
         against_info_tds = against_info_table.find_all('td')
         
         try:
-            # 获取 Pokemon 名字
-            name = self.extract_name(soup)
-            if name is None:
-                raise Exception('Pokemon name not found for {}'\
+            # 获取 Pokemon 中文名字
+            chinese_name = self.extract_chinese_name(base_info_trs)
+            if chinese_name is None:
+                raise Exception('Pokemon Chinese name not found for {}'\
+                    .format(response.url))
+
+            # 获取 Pokemon 英文名字
+            english_name = self.extract_english_name(base_info_trs)
+            if english_name is None:
+                raise Exception('Pokemon English name not found for {}'\
                     .format(response.url))
 
             # 获取 Pokemon 序号
@@ -276,7 +282,8 @@ class pokemonsSpider(scrapy.Spider):
                     .format(response.url))
 
             # 保存成 item 以存储至 mongodb
-            pokemon_item = PokemonsItem(_id=pokdex, name=name, types=types, 
+            pokemon_item = PokemonsItem(_id=pokdex, chinese_name=chinese_name, 
+                                        english_name=english_name, types=types, 
                                         category=category, abilities=abilities,
                                         exp_100=exp_100, catch_rate=catch_rate,
                                         male_ratio=male_ratio, 
@@ -310,14 +317,19 @@ class pokemonsSpider(scrapy.Spider):
 
 
     @staticmethod
-    def extract_name(soup):
+    def extract_chinese_name(trs):
         '''
-        提取 Pokemon name
+        提取 Pokemon 中文名字
         '''
-        # 提取 Pokemon name 的 html 选择器
-        selector = 'h1#firstHeading.firstHeading'
-        if len(soup.select(selector)) != 0:
-            return soup.select(selector)[0].text
+        return trs[0].find_all('b')[0].text
+
+    @staticmethod
+    def extract_english_name(trs):
+        '''
+        提取 Pokemon 英文名字
+        '''
+        return trs[0].find_all('b')[-1].text
+
 
     @staticmethod
     def extract_pokdex(trs, soup):
