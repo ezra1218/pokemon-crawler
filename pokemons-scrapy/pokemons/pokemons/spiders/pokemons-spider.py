@@ -4,7 +4,6 @@ import scrapy
 from bs4 import BeautifulSoup
 import re
 import traceback
-from . import tags
 from pokemons.items import PokemonsItem
 
 class pokemonsSpider(scrapy.Spider):
