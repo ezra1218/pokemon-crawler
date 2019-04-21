@@ -38,9 +38,9 @@ class pokemonsSpider(scrapy.Spider):
         for tag in tags:
             # 每个 Pokemon 详情界面的 url
             url = (domain+tag.get('href'))
-            yield scrapy.Request(url, callback=self.parse_deatils)
+            yield scrapy.Request(url, callback=self.parse_details)
 
-    def parse_deatils(self, response):
+    def parse_details(self, response):
         '''
         解析详情网页
         '''
