@@ -1,5 +1,5 @@
 # pokemon-crawler
-该项目使用 python scrapy 爬取 [神奇宝贝百科](https://wiki.52poke.com/wiki/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E6%8C%89%E5%85%A8%E5%9B%BD%E5%9B%BE%E9%89%B4%E7%BC%96%E5%8F%B7%EF%BC%89/%E7%AE%80%E5%8D%95%E7%89%88) 的所有神奇宝贝的各项数据，并将数据保存至 MongoDB 中
+该项目使用 python scrapy 爬取 [神奇宝贝百科](https://wiki.52poke.com/wiki/%E5%AE%9D%E5%8F%AF%E6%A2%A6%E5%88%97%E8%A1%A8%EF%BC%88%E6%8C%89%E5%85%A8%E5%9B%BD%E5%9B%BE%E9%89%B4%E7%BC%96%E5%8F%B7%EF%BC%89/%E7%AE%80%E5%8D%95%E7%89%88) 的所有神奇宝贝的各项数据，将数据保存至 MongoDB 中，并可下载 Pokemon 图片并保存至本地
 
 ## 安装 packages
 **scrapy**  
@@ -57,3 +57,6 @@ $ scrapy crawl pokemons
 ```
 即可开始爬取 Pokemon 的各项数据，并保存至 MongoDB
 ![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/pokemons-scrapy/IMG/pokemons-stats-mongodb-screenshot.png)
+
+下载的 Pokemon Images
+![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/pokemons-scrapy/IMG/all-pokemons-img-screenshot.png)
