@@ -33,7 +33,11 @@ class PokemonsItem(scrapy.Item):
     speed = scrapy.Field() # 速度
     total = scrapy.Field() # 种族值总和
     generation = scrapy.Field() # 世代
-    image_url = scrapy.Field() # 图片链接
+
+    # =======================================
+    # 下载图片
+    image_urls = scrapy.Field() # 图片链接
+    images = scrapy.Field()
 
     # =======================================
     # 属性相克

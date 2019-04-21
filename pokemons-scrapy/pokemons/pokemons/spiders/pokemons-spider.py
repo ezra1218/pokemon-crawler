@@ -18,7 +18,7 @@ class pokemonsSpider(scrapy.Spider):
         'https://wiki.52poke.com/wiki/宝可梦列表（按全国图鉴编号）/简单版'
     ]
 
-    #
+    # scrapy 输出设置
     custom_settings = {
         'LOG_LEVEL': 'ERROR' # 只显示错误信息
     }
@@ -186,6 +186,8 @@ class pokemonsSpider(scrapy.Spider):
 
             # 获取 Pokemon 图片链接
             image_url = self.extract_image_url(base_info_trs)
+            image_urls = []
+            image_urls.append(image_url)
             if image_url is None:
                 raise Exception('Pokemon Image URL not found for {}'\
                     .format(response.url))
@@ -297,7 +299,7 @@ class pokemonsSpider(scrapy.Spider):
             if against_fairy is None:
                 raise Exception('Pokemon Against Fairy not found for {}'\
                     .format(response.url))
-
+            
             # 保存成 item 以存储至 mongodb
             pokemon_item = PokemonsItem(_id=pokdex, chinese_name=chinese_name, 
                                         english_name=english_name, 
@@ -312,7 +314,7 @@ class pokemonsSpider(scrapy.Spider):
                                         defense=defense,  spatk=spatk, 
                                         spdef=spdef, speed=speed, 
                                         total=total, generation=generation, 
-                                        image_url=image_url, 
+                                        image_urls=image_urls,
                                         against_normal=against_normal,
                                         against_fight=against_fight, 
                                         against_flying=against_flying,
@@ -331,6 +333,7 @@ class pokemonsSpider(scrapy.Spider):
                                         against_dragon=against_dragon, 
                                         against_dark=against_dark, 
                                         against_fairy=against_fairy)
+                                        
             yield pokemon_item
 
         except Exception as err:
@@ -358,10 +361,6 @@ class pokemonsSpider(scrapy.Spider):
         '''
         提取 Pokemon 序号
         '''
-        # selector = 'h1#firstHeading.firstHeading'
-        # if len(soup.select(selector)) != 0:
-        #     print(soup.select(selector)[0].text)
-
         return re.findall(r'\d{3}', trs[0].text)[0]
 
     @staticmethod
@@ -532,21 +531,20 @@ class pokemonsSpider(scrapy.Spider):
         '''
         domain = 'https://'
         try:
-            image_url = re.findall(r'media.*png', trs[3]\
+            relative_url = re.findall(r'media.*png', trs[3]\
                 .find('img').get('data-srcset').split(',')[-1])[0]
         except:
-            image_url = trs[3].find('img').get('data-url')
+            relative_url = trs[3].find('img').get('data-url')
 
-        return domain + image_url
+        img_url = domain + relative_url
+        # self.img_urls.append(img_url)
+        return img_url
 
     @staticmethod
     def extract_against_norml(tds, soup):
         '''
         提取 Pokemon 对 一般 属性的抗性
         '''
-        # selector = 'h1#firstHeading.firstHeading'
-        # if len(soup.select(selector)) != 0:
-        #     print('name: {}'.format(soup.select(selector)[0].text))
         if tds[3]:
             return tds[3].text.strip()
 

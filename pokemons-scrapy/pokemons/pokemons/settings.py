@@ -14,15 +14,24 @@ BOT_NAME = 'pokemons'
 SPIDER_MODULES = ['pokemons.spiders']
 NEWSPIDER_MODULE = 'pokemons.spiders'
 
+# 用于进行数据持久化、下载文件
+# 可设置多个 ITEM_PIPELINES
 ITEM_PIPELINES = {
-    'pokemons.pipelines.PokemonsPipeline': 300,
+    # 保存至 MongoDB
+    'pokemons.pipelines.PokemonsMongoPipeline': 300,
+    # 下载图片
+    'pokemons.pipelines.PokemonsImagesPipeline': 301
 }
+
+# 图片存储的路径
+IMAGES_STORE = './pokemon-imgs/'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'pokemons (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# 设置为 False 才能进行图片下载
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
