@@ -56,7 +56,7 @@ $ open .bash_profile
 $ scrapy crawl pokemons
 ```
 即可开始爬取 Pokemon 的各项数据，并保存至 MongoDB
-![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/pokemons-scrapy/IMG/pokemons-stats-mongodb-screenshot.png)
+![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/IMG/pokemons-stats-mongodb-screenshot.png)
 
 下载的 Pokemon Images
-![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/pokemons-scrapy/IMG/all-pokemons-img-screenshot.png)
+![pokemons-stats-mongodb-screenshot.png](https://github.com/ezra1218/pokemon-crawler/blob/master/IMG/all-pokemons-img-screenshot.png)
